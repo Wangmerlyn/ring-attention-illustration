@@ -2,6 +2,8 @@
 
 一个基于 Vue 3 + Vite 的中文交互教学页面。
 
+在线演示：[GitHub Pages](https://wangmerlyn.github.io/ring-attention-illustration/)，[单 GPU online softmax 动画](https://wangmerlyn.github.io/ring-attention-illustration/#online-softmax)。
+
 推荐 Node.js 22.12+ 与 npm。使用 `.nvmrc` 可通过 `nvm use` 选择 Node.js 22。
 
 ```sh
@@ -60,6 +62,19 @@ npm test
 npm run build
 npm run preview -- --port 4173
 ```
+
+## GitHub Pages 部署
+
+`.github/workflows/pages.yml` 在 `main` 更新时自动构建并发布，也可以在 GitHub Actions 中手动运行。构建先执行全部计算测试，然后将 `dist/` 部署到 GitHub Pages；仓库的 Pages 发布源使用 GitHub Actions。
+
+Pages 位于仓库子路径 `/ring-attention-illustration/`，专用构建命令会设置 Vite 的资源前缀。本地开发和普通构建仍使用根路径。复现 Pages 构建并检查子路径：
+
+```sh
+npm run build:pages
+npm run preview -- --port 4173 --base=/ring-attention-illustration/
+```
+
+浏览器访问 `http://localhost:4173/ring-attention-illustration/`。JS、CSS 和 favicon 都会使用这个前缀；页面内的 hash 导航和动画无需后端服务。
 
 测试覆盖所有设备和查询行的 full / causal 与 dense attention 等价性、ring 访问顺序、不整除序列的完整分片、大幅值下的数值稳定性和全掩码分块处理。
 
